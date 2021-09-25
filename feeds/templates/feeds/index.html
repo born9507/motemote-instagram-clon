@@ -1,0 +1,69 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Instagram</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'feeds/css/style.css' %}"/>
+  </head>
+  <body>
+    <header>
+      <span class="logo">
+        <a href="https://www.instagram.com/">
+          <img class="icon" src="{% static 'feeds/images/logo.png' %}" width="130px" alt="logo"/>
+        </a>
+      </span>
+      <span class="search">
+        <input type="text" placeholder="검색">
+      </span>
+      <span class="icon-list">
+        <img src="{% static 'feeds/images/icon_list.png' %}" width="170px" alt="icon list"/>
+      </span>
+    </header>
+    <main>
+      <!-- IMAGE FEED SECTION -->
+      <section class="feed">
+        <div class="feed-header">
+          <img src="{% static 'feeds/images/profile.jpg' %}" width="25px" alt="profile image"/>
+          <div class="feed-title">motemote</div>
+        </div>
+        <img class="feed-content" src="{% static 'feeds/images/article.jpg' %}" width="500px" alt="feed image"/>
+        <div class="feed-footer">
+          <img class="buttons" src="{% static 'feeds/images/feed_buttons.png' %}" width="120px" alt="feed buttons"/>
+          <form method="POST">
+            <div class="comment">
+              <img src="{% static 'feeds/images/smile.png' %}" width="40px" alt="feed comment image"/>
+              <input type="text" placeholder="댓글 달기...">
+            </div>
+            <button type="submit">게시</button>
+          </form>
+        </div>
+      </section>
+      <!-- VIDEO FEED SECTION -->
+      <section class="feed">
+        <div class="feed-header">
+          <img src="{% static 'feeds/images/profile.jpg' %}" width="25px" alt="profile image"/>
+          <div class="feed-title">motemote</div>
+        </div>
+        <iframe
+          class="feed-content"
+          src="https://www.youtube.com/embed/ZPj-0kBg4WE"
+          frameborder="0"
+        ></iframe>
+        <div class="feed-footer">
+          <img class="buttons" src="{% static 'feeds/images/feed_buttons.png' %}" width="120px" alt="feed buttons"/>
+          <form method="POST">
+            <div class="comment">
+              <img src="{% static 'feeds/images/smile.png' %}" width="40px" alt="feed comment image"/>
+              <input type="text" placeholder="댓글 달기...">
+            </div>
+            <button type="submit">게시</button>
+          </form>
+        </div>
+      </section>
+    </main>
+    <footer>
+      © 2021 Mostagram from motemote
+    </footer>
+  </body>
+</html>

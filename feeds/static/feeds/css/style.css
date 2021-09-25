@@ -1,0 +1,128 @@
+body {
+  margin-top: 50px;
+}
+
+input:focus {
+  outline: none;
+}
+
+/* HEADER SECTION */
+header {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  background-color: white;
+  border-bottom: 1px solid #D3D3D3;
+}
+
+header .logo .icon {
+  width: 130px;
+  height: 37px;
+}
+
+header .search input {
+  width: 215px;
+  height: 20px;
+  padding: 5px 10px;
+  border: 1px solid #D3D3D3;
+  border-radius: 3px;
+}
+
+header .icon-list {
+  cursor: pointer;
+}
+
+header .icon-list img {
+  width: 170px;
+}
+
+/* FEED SECTION */
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.feed {
+  font-size: 18px;
+  box-sizing : border-box;
+  width: 50%;
+  min-width: 498px;
+  margin-top: 50px;
+  border: 1px solid #D3D3D3;
+  border-radius: 3px;
+}
+
+.feed .feed-header {
+  display: flex;
+  align-items: center;
+  padding: 5px 10px;
+}
+
+.feed .feed-header img {
+  width: 25px;
+  border-radius: 100%;
+}
+
+.feed .feed-header .feed-title {
+  margin: 5px 0px 5px 10px;
+}
+
+.feed .feed-content {
+  width: 100%;
+  height: 330px;
+}
+
+.feed .feed-footer img {
+  width: 120px;
+  cursor: pointer;
+}
+
+.feed .feed-footer form {
+  height: 43px;
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid #D3D3D3;
+}
+
+.feed .feed-footer form .comment {
+  width: calc(100% - 40px);
+  display: flex;
+  align-items: center;
+}
+
+.feed .feed-footer form .comment img {
+  width: 40px;
+}
+
+.feed .feed-footer form .comment input {
+  width: 100%;
+  border: none;
+}
+
+.feed .feed-footer form button {
+  color: #1890ff;
+  opacity: 0.5;
+  box-sizing: border-box;
+  width: 40px;
+  background-color: transparent;
+  margin-right: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+.feed .feed-footer form button:focus {
+  outline: none;
+}
+
+/* FOOTER */
+footer {
+  font-size: 10px;
+  display: flex;
+  justify-content: center;
+  margin-top: 100px;
+}
