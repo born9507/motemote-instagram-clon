@@ -21,5 +21,4 @@ from django.conf.urls import include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', feeds.views.index, name='index'),
-    path('feeds/', include('feeds.urls')),
 ]
