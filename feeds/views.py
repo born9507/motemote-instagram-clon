@@ -12,7 +12,16 @@ def index(request):
         Feed.objects.create(content=content)
         # feed = Feed(content=content)
         # feed.save()
-        return redirect('feeds:index')
+        return redirect('/')
 
 def new(request):
     return render(request, 'feeds/new.html')
+
+def show(request, id):
+    feed = Feed.objects.get(id=id)
+    return render(request, 'feeds/show.html', {'feed': feed})
+
+def delete(request, id):
+    feed = Feed.objects.get(id=id)
+    feed.delete()
+    return redirect('/')
