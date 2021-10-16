@@ -12,6 +12,7 @@
     <img class="buttons" src="{% static 'feeds/images/feed_buttons.png' %}" alt="feed buttons"/>
     <div class="feed-text">{{ feed.content }}</div>
     <a href="/feeds/{{ feed.id }}/delete/">삭제</a>
+    <a href="/feeds/{{ feed.id }}/update/">수정</a>
     <form method="POST">
       <div class="comment">
         <img src="{% static 'feeds/images/smile.png' %}" alt="feed comment image"/>
