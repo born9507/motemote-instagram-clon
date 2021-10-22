@@ -17,9 +17,13 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls import include
 import feeds.views
+import accounts.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', feeds.views.index, name='index'),
     path('feeds/', include('feeds.urls')),
+    # path('accounts/', include('accounts.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('accounts/signup/', accounts.views.signup, name='signup'),
 ]
