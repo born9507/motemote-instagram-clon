@@ -23,6 +23,7 @@
         <div>
           {% if user.is_authenticated %}
           Hello, {{ user.get_username }}
+          <a href="/accounts/mypage/">MyPage</a>
           <a href="/accounts/logout/?next={{request.path}}">Logout</a>
           {% else %}
           <a href="/accounts/signup/">Signup</a>

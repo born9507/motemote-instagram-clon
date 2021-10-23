@@ -1,3 +1,7 @@
+{% extends 'feeds/base.html' %}
+{% load static %}
+
+{% block content %}
 <h1>Login</h1>
 <form method="POST" action="/accounts/login/">
   {% csrf_token %}
@@ -12,3 +16,4 @@
   <input type="hidden" name="next" value="{{next}}" />
   <input type="submit" value="login">
 </form>
+{% endblock content %}

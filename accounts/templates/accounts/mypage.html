@@ -1,0 +1,18 @@
+{% extends 'feeds/base.html' %}
+{% load static %}
+
+{% block content %}
+<h1> {{request.user}}의 정보 수정 </h1>
+<form method="POST" action="/accounts/mypage/">
+  {% csrf_token %}
+  <div>
+    <div>College</div>
+    <input name="college" type="text" value="{{request.user.profile.college}}">
+  </div>
+  <div>
+    <div>Major</div>
+    <input name="major" type="text" value="{{request.user.profile.major}}">
+  </div>
+  <input type="submit" value="save">
+</form>
+{% endblock content %}

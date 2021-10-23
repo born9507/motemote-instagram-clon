@@ -1,5 +1,5 @@
 from django.shortcuts import redirect, render
-from .models import Feed
+from .models import Feed, Comment
 
 # Create your views here.
 def index(request):
@@ -31,11 +31,18 @@ def update(request, id):
         feed = Feed.objects.get(id=id)
         return render(request, 'feeds/update.html', {'feed': feed})
     if request.method == "POST":
-
-        # feed = Feed.objects.get(id=id)
-        # feed.content = request.POST['content']
-        # feed.save()
-
         Feed.objects.filter(id=id).update(content=request.POST['content'])
 
         return redirect(f'/feeds/{id}/')
+
+
+def create_comment(request, id):
+    content = request.POST['content']
+    Comment.objects.create(feed_id=id, content=content)
+    return redirect(f'/feeds/{id}')
+
+
+def delete_comment(request, feed_id, comment_id):
+    comment = Comment.objects.get(id=comment_id)
+    comment.delete()
+    return redirect(f'/feeds/{feed_id}/')

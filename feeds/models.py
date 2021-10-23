@@ -19,3 +19,12 @@ class Feed(models.Model):
         myfake = Faker('ko_KR')
         for i in range(count):
             Feed.objects.create(content=myfake.catch_phrase())
+
+
+class Comment(models.Model):
+    feed = models.ForeignKey(Feed, on_delete=models.CASCADE)
+    content = models.TextField()
+    created_at = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f'[feed: {self.feed}] {self.content}'

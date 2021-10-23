@@ -13,10 +13,18 @@
     <div class="feed-text">{{ feed.content }}</div>
     <a href="/feeds/{{ feed.id }}/delete/">삭제</a>
     <a href="/feeds/{{ feed.id }}/update/">수정</a>
-    <form method="POST">
+    <p>댓글이 n개 있습니다<p>
+    {% for comment in feed.comment_set.all %}
+      <p>
+        {{ comment.content }}
+        <a href="/feeds/{{feed.id}}/comments/{{comment.id}}/delete/">댓글 삭제</a>
+      </p>
+    {% endfor %}
+    <form action="/feeds/{{feed.id}}/comments/" method="POST">
+      {% csrf_token %}
       <div class="comment">
         <img src="{% static 'feeds/images/smile.png' %}" alt="feed comment image"/>
-        <input type="text" placeholder="댓글 달기...">
+        <input name="content" type="text" placeholder="댓글 달기...">
       </div>
       <button type="submit">게시</button>
     </form>

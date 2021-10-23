@@ -40,6 +40,8 @@ INSTALLED_APPS = [
 
     'feeds',
     'accounts',
+
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
