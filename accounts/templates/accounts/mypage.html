@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-<h1> {{request.user}}의 정보 수정 </h1>
+<h1> {{request.user.get_username}}의 정보 수정 </h1>
 <form method="POST" action="/accounts/mypage/">
   {% csrf_token %}
   <div>
@@ -15,4 +15,10 @@
   </div>
   <input type="submit" value="save">
 </form>
+
+<h1>{{request.user.like_feeds.count}} Liked Feeds</h1>
+{% for feed in request.user.like_feeds.all %}
+<a href="/feeds/{{feed.id}}/">{{feed.content}}</a>
+{% endfor %}
+
 {% endblock content %}

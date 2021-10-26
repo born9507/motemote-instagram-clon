@@ -1,25 +1,28 @@
-{% extends 'feeds/base.html' %}
-{% load static %}
-
-{% block content %}
+{% extends 'feeds/base.html' %} {% load static %} {% block content %}
 <section class="feed">
   <div class="feed-header">
-    <img src="{% static 'feeds/images/profile.jpg' %}" alt="profile image"/>
-    <div class="feed-title">motemote</div>
+    <img src="{% static 'feeds/images/profile.jpg' %}" alt="profile image" />
+    <div class="feed-title">{{feed.author}}</div>
   </div>
   <img class="feed-content" src="{% static 'feeds/images/article.jpg' %}" alt="feed image"/>
   <div class="feed-footer">
     <img class="buttons" src="{% static 'feeds/images/feed_buttons.png' %}" alt="feed buttons"/>
     <div class="feed-text">{{ feed.content }}</div>
+    {% if request.user == feed.author %}
     <a href="/feeds/{{ feed.id }}/delete/">삭제</a>
     <a href="/feeds/{{ feed.id }}/update/">수정</a>
-    <p>댓글이 n개 있습니다<p>
+    {% endif %}
+    <p>댓글이 n개 있습니다</p>
     {% for comment in feed.comment_set.all %}
-      <p>
-        {{ comment.content }}
-        <a href="/feeds/{{feed.id}}/comments/{{comment.id}}/delete/">댓글 삭제</a>
-      </p>
+    <p>
+      {{ comment.content }}
+      {% if request.user == comment.author %}
+      <a href="/feeds/{{feed.id}}/comments/{{comment.id}}/delete/">댓글 삭제</a>
+      {% endif %}
+    </p>
     {% endfor %}
+    {% if user.is_authenticated %}
+    <div>{{feed.created_at}}</div>
     <form action="/feeds/{{feed.id}}/comments/" method="POST">
       {% csrf_token %}
       <div class="comment">
@@ -28,6 +31,7 @@
       </div>
       <button type="submit">게시</button>
     </form>
+    {% endif %}
   </div>
 </section>
 {% endblock content %}

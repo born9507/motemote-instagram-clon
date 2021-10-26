@@ -17,9 +17,11 @@
         <input type="text" placeholder="검색">
       </span>
       <span class="icon-list">
+        {% if user.is_authenticated %}
         <a href="/feeds/new/">
           <img class="add" src="{% static 'feeds/images/add.png' %}" alt="add">
         </a>
+        {% endif %}
         <div>
           {% if user.is_authenticated %}
           Hello, {{ user.get_username }}

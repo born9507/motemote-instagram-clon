@@ -10,4 +10,6 @@ urlpatterns = [
     path('<int:id>/update/', views.update, name='update'),
     path('<int:id>/comments/', views.create_comment, name='create_comment'),
     path('<int:feed_id>/comments/<int:comment_id>/delete/', views.delete_comment, name='delete_comment'),
+    path('<int:id>/like/', views.like, name='like'),
+    # localhost:8000/feeds/10/like/
 ]

@@ -6,18 +6,33 @@
 <section class="feed">
   <div class="feed-header">
     <img src="{% static 'feeds/images/profile.jpg' %}" alt="profile image"/>
-    <div class="feed-title">motemote</div>
+    <div class="feed-title">{{feed.author}}</div>
   </div>
   <a href="/feeds/{{feed.id}}/">
     <img class="feed-content" src="{% static 'feeds/images/article.jpg' %}" alt="feed image"/>
   </a>
   <div class="feed-footer">
     <img class="buttons" src="{% static 'feeds/images/feed_buttons.png' %}" alt="feed buttons"/>
+    {% if user.is_authenticated %}
+      <a href="/feeds/{{feed.id}}/like/">
+        {{ feed.like_users.count }} Likes
+      </a>
+    {% else %}
+      <div>{{ feed.like_users.count }} Likes</div>
+    {% endif %}
     <div class="feed-text">{{ feed.content }}</div>
-    <form method="POST">
+    <p>댓글이 n개 있습니다<p>
+    {% for comment in feed.comment_set.all %}
+      <p>
+        {{ comment.content }}
+      </p>
+    {% endfor %}
+    <div>{{feed.created_at}}</div>
+    <form action="/feeds/{{feed.id}}/comments/" method="POST">
+      {% csrf_token %}
       <div class="comment">
         <img src="{% static 'feeds/images/smile.png' %}" alt="feed comment image"/>
-        <input type="text" placeholder="댓글 달기...">
+        <input name="content" type="text" placeholder="댓글 달기...">
       </div>
       <button type="submit">게시</button>
     </form>
