@@ -41,3 +41,15 @@ def mypage(request):
         profile.major = request.POST['major']
         profile.save()
     return render(request, 'accounts/mypage.html')
+
+
+def follow_manager(request, user_to_follow_id):
+    follow_from = Profile.objects.get(user_id=request.user.id)
+    follow_to = Profile.objects.get(user_id=user_to_follow_id)
+
+    if follow_to in follow_from.following.all():
+        follow_from.following.remove(follow_to)
+    else:
+        follow_from.following.add(follow_to)
+
+    return redirect('/')

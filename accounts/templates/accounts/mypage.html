@@ -21,4 +21,14 @@
 <a href="/feeds/{{feed.id}}/">{{feed.content}}</a>
 {% endfor %}
 
+<h1>{{request.user.profile.following.count}} following</h1>
+{% for following in request.user.profile.following.all %}
+<a>{{following.user.username}}</a>
+{% endfor %}
+
+<h1>{{request.user.profile.followers.count}} followers</h1>
+{% for follower in request.user.profile.followers.all %}
+<a>{{follower.user.username}}</a>
+{% endfor %}
+
 {% endblock content %}

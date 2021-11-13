@@ -6,6 +6,7 @@ class Profile(models.Model):   # 추가
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     college = models.CharField(max_length=20, blank=True)
     major = models.CharField(max_length=20, blank=True)
+    following = models.ManyToManyField('self', related_name='followers', symmetrical=False)
 
     def __str__(self):
         return f'id={self.id}, user_id={self.user.id}, college={self.college}, major={self.major}'

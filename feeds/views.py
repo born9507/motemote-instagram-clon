@@ -48,6 +48,19 @@ def delete_comment(request, feed_id, comment_id):
     return redirect(f'/feeds/{feed_id}/')
 
 
+def create_nested_comment(request, feed_id, comment_id):
+    feed = Feed.objects.get(id=feed_id)
+    comment = Comment.objects.get(id=comment_id)
+    if request.method == 'POST':
+        Comment.objects.create(
+            feed_id=feed_id,
+            parent_comment_id=comment_id,
+            content=request.POST['content']
+        )
+        return redirect(f"/feeds/{feed_id}/")
+    return render(request, 'feeds/new_nested_comment.html', {'feed': feed, 'comment': comment})
+
+
 def like(request, id):
     feed = Feed.objects.get(id=id)
     is_liked_by_me = feed.like_users.filter(id=request.user.id).exists()

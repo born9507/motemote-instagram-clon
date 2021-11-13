@@ -12,14 +12,24 @@
     <a href="/feeds/{{ feed.id }}/delete/">삭제</a>
     <a href="/feeds/{{ feed.id }}/update/">수정</a>
     {% endif %}
-    <p>댓글이 n개 있습니다</p>
+    <p>댓글이 {{ feed.comment_set.count }}개 있습니다</p>
     {% for comment in feed.comment_set.all %}
-    <p>
-      {{ comment.content }}
-      {% if request.user == comment.author %}
-      <a href="/feeds/{{feed.id}}/comments/{{comment.id}}/delete/">댓글 삭제</a>
+      {% if comment.parent_comment is None %}
+        <p>
+          {{ comment.content }}
+          {% if request.user == comment.author %}
+            <a href="/feeds/{{feed.id}}/comments/{{comment.id}}/delete/">댓글 삭제</a>
+            <a href="/feeds/{{feed.id}}/comments/{{comment.id}}/create/">대댓글 달기</a>
+          {% endif %}
+        </p>
+
+        {% for child_comment in comment.child_comment_set.all %}
+          <p>
+            └ {{ child_comment.content }}
+            <a href="/feeds/{{feed.id}}/comments/{{child_comment.id}}/delete/">대댓글 삭제</a>
+          </p>
+        {% endfor %}
       {% endif %}
-    </p>
     {% endfor %}
     {% if user.is_authenticated %}
     <div>{{feed.created_at}}</div>
