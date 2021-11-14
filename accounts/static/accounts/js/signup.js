@@ -42,10 +42,3 @@ const validatePassword = (passwords) => {
 const isSamePassword = ([pw1, pw2]) => {
   return pw1 === pw2;
 }
-
-// [password1.value, password2.value]
-// const isSamePassword = (passwords) => {
-//   return passwords[0] === passwords[1];
-// }
-
-// ==
