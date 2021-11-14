@@ -53,6 +53,7 @@ def create_nested_comment(request, feed_id, comment_id):
     comment = Comment.objects.get(id=comment_id)
     if request.method == 'POST':
         Comment.objects.create(
+            author=request.user,
             feed_id=feed_id,
             parent_comment_id=comment_id,
             content=request.POST['content']
@@ -69,4 +70,14 @@ def like(request, id):
     else:
         feed.like_users.add(request.user)
         # Like.objects.create(user=request.user, feed=feed)
-    return redirect ('/')
+    return redirect(request.GET.get('next', '/'))
+
+
+def comment_like(request, id, comment_id):
+    comment = Comment.objects.get(id=comment_id)
+    is_liked_by_me = comment.like_users.filter(id=request.user.id).exists()
+    if is_liked_by_me:
+        comment.like_users.remove(request.user)
+    else:
+        comment.like_users.add(request.user)
+    return redirect(request.GET.get('next', '/'))

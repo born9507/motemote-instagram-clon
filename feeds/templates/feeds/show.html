@@ -7,26 +7,49 @@
   <img class="feed-content" src="{% static 'feeds/images/article.jpg' %}" alt="feed image"/>
   <div class="feed-footer">
     <img class="buttons" src="{% static 'feeds/images/feed_buttons.png' %}" alt="feed buttons"/>
+    {% if user.is_authenticated %}
+      <a href="/feeds/{{feed.id}}/like/?next={{request.path}}">
+        {{ feed.like_users.count }} Likes
+      </a>
+    {% else %}
+      <div>{{ feed.like_users.count }} Likes</div>
+    {% endif %}
     <div class="feed-text">{{ feed.content }}</div>
     {% if request.user == feed.author %}
     <a href="/feeds/{{ feed.id }}/delete/">삭제</a>
     <a href="/feeds/{{ feed.id }}/update/">수정</a>
     {% endif %}
     <p>댓글이 {{ feed.comment_set.count }}개 있습니다</p>
-    {% for comment in feed.comment_set.all %}
+    {% for comment in feed.comment_set.all|dictsortreversed:'like_users.count' %}
       {% if comment.parent_comment is None %}
         <p>
           {{ comment.content }}
-          {% if request.user == comment.author %}
-            <a href="/feeds/{{feed.id}}/comments/{{comment.id}}/delete/">댓글 삭제</a>
-            <a href="/feeds/{{feed.id}}/comments/{{comment.id}}/create/">대댓글 달기</a>
+          {% if user.is_authenticated %}
+            <a href="/feeds/{{feed.id}}/comments/{{comment.id}}/like/?next={{request.path}}">
+              {{ comment.like_users.count }} Likes
+              {% if user == comment.author %}
+              <a href="/feeds/{{feed.id}}/comments/{{comment.id}}/delete/">댓글 삭제</a>
+              {% endif %}
+              <a href="/feeds/{{feed.id}}/comments/{{comment.id}}/create/">대댓글 달기</a>
+            </a>
+          {% else %}
+            <div>{{ comment.like_users.count }} Likes</div>
           {% endif %}
         </p>
 
         {% for child_comment in comment.child_comment_set.all %}
           <p>
             └ {{ child_comment.content }}
-            <a href="/feeds/{{feed.id}}/comments/{{child_comment.id}}/delete/">대댓글 삭제</a>
+            {% if user.is_authenticated %}
+              <a href="/feeds/{{feed.id}}/comments/{{child_comment.id}}/like/?next={{request.path}}">
+                {{ child_comment.like_users.count }} Likes
+              </a>
+              {% if user == child_comment.author %}
+                <a href="/feeds/{{feed.id}}/comments/{{child_comment.id}}/delete/">대댓글 삭제</a>
+              {% endif %}
+            {% else %}
+              <div>{{ child_comment.like_users.count }} Likes</div>
+            {% endif %}
           </p>
         {% endfor %}
       {% endif %}

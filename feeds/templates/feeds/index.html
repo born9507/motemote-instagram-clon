@@ -31,7 +31,9 @@
     {% endif %}
     <div class="feed-text">{{ feed.content }}</div>
     <a href="/feeds/{{feed.id}}/"><p>댓글이 {{ feed.comment_set.count }}개 있습니다</p></a>
-    <p>{{ feed.comment_set.last.content }}</p>
+    {% for comment in feed.comment_set.all|dictsortreversed:'like_users.count'|slice:':1' %}
+    <p>{{comment.content}}</p>
+    {% endfor %}
     <div>{{feed.created_at}}</div>
     <form action="/feeds/{{feed.id}}/comments/" method="POST">
       {% csrf_token %}

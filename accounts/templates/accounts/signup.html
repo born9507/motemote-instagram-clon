@@ -3,11 +3,11 @@
 
 {% block content %}
 <h1> Signup </h1>
-<form method="POST" action="/accounts/signup/">
+<form id="signup-form" method="POST" action="/accounts/signup/">
   {% csrf_token %}
   <div>
     <div>Username</div>
-    <input name="username" type="text" value="">
+    <input name="username" type="text" value="" placeholder="사용자 이름을 입력해주세요">
   </div>
   <div>
     <div>Password</div>
@@ -27,4 +27,5 @@
   </div>
   <input type="submit" value="signup">
 </form>
+<script src="{% static 'accounts/js/signup.js' %}"></script>
 {% endblock content %}

@@ -13,4 +13,6 @@ urlpatterns = [
     path('<int:feed_id>/comments/<int:comment_id>/create/', views.create_nested_comment, name='create_nested_comment'),
     path('<int:id>/like/', views.like, name='like'),
     # localhost:8000/feeds/10/like/
+    path('<int:id>/comments/<int:comment_id>/like/', views.comment_like, name='comment_like'),
+    # localhost:8000/5/comments/10/like/
 ]
