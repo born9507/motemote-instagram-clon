@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'accounts/css/signup.css' %}"/>
 <h1> Signup </h1>
 <form id="signup-form" method="POST" action="/accounts/signup/">
   {% csrf_token %}
@@ -11,11 +12,11 @@
   </div>
   <div>
     <div>Password</div>
-    <input name="password1" type="password" value="">
+    <input name="password1" type="password" value="" placeholder="3자 이상의 알파벳 대소문자 or 숫자를 입력해주세요">
   </div>
   <div>
     <div>Confirm Password</div>
-    <input name="password2" type="password" value="">
+    <input name="password2" type="password" value="" placeholder="3자 이상의 알파벳 대소문자 or 숫자를 입력해주세요">
   </div>
   <div>
     <div>College</div>
@@ -27,5 +28,14 @@
   </div>
   <input type="submit" value="signup">
 </form>
+<div id="signup-error-modal">
+  <div class="modal-header">
+    <div class="modal-title">입력 오류</div>
+    <button class="close-button">✖</button>
+  </div>
+  <div class="modal-content">
+    비밀번호를 확인해주세요
+  </div>
+</div>
 <script src="{% static 'accounts/js/signup.js' %}"></script>
 {% endblock content %}
