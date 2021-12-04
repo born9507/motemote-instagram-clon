@@ -91,29 +91,29 @@ main {
   cursor: pointer;
 }
 
-.feed .feed-footer form {
+.feed .feed-footer .comment-input-box {
   height: 43px;
   display: flex;
   justify-content: space-between;
   border-top: 1px solid #D3D3D3;
 }
 
-.feed .feed-footer form .comment {
+.feed .feed-footer .comment-input-box .comment {
   width: calc(100% - 40px);
   display: flex;
   align-items: center;
 }
 
-.feed .feed-footer form .comment img {
+.feed .feed-footer .comment-input-box .comment img {
   width: 40px;
 }
 
-.feed .feed-footer form .comment input {
+.feed .feed-footer .comment-input-box .comment input {
   width: 100%;
   border: none;
 }
 
-.feed .feed-footer form button {
+.feed .feed-footer .comment-input-box button {
   color: #1890ff;
   opacity: 0.5;
   box-sizing: border-box;
@@ -124,7 +124,7 @@ main {
   cursor: pointer;
 }
 
-.feed .feed-footer form button:focus {
+.feed .feed-footer .comment-input-box button:focus {
   outline: none;
 }
 

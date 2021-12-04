@@ -1,4 +1,7 @@
-{% extends 'feeds/base.html' %} {% load static %} {% block content %}
+{% extends 'feeds/base.html' %}
+{% load static %}
+{% block content %}
+<script src="{% static 'feeds/js/show.js' %}"></script>
 <section class="feed">
   <div class="feed-header">
     <img src="{% static 'feeds/images/profile.jpg' %}" alt="profile image" />
@@ -20,50 +23,55 @@
     <a href="/feeds/{{ feed.id }}/update/">수정</a>
     {% endif %}
     <p>댓글이 {{ feed.comment_set.count }}개 있습니다</p>
-    {% for comment in feed.comment_set.all|dictsortreversed:'like_users.count' %}
-      {% if comment.parent_comment is None %}
-        <p>
-          {{ comment.content }}
-          {% if user.is_authenticated %}
-            <a href="/feeds/{{feed.id}}/comments/{{comment.id}}/like/?next={{request.path}}">
-              {{ comment.like_users.count }} Likes
+    <div id="comment-list">
+      {% comment %} {% for comment in feed.comment_set.all|dictsortreversed:'like_users.count' %} {% endcomment %}
+      {% for comment in feed.comment_set.all %}
+        {% if comment.parent_comment is None %}
+          <p>
+            {{ comment.content }}
+            {% if user.is_authenticated %}
+              <a href="/feeds/{{feed.id}}/comments/{{comment.id}}/like/?next={{request.path}}">
+                {{ comment.like_users.count }} Likes
+              </a>
               {% if user == comment.author %}
               <a href="/feeds/{{feed.id}}/comments/{{comment.id}}/delete/">댓글 삭제</a>
               {% endif %}
               <a href="/feeds/{{feed.id}}/comments/{{comment.id}}/create/">대댓글 달기</a>
-            </a>
-          {% else %}
-            <div>{{ comment.like_users.count }} Likes</div>
-          {% endif %}
-        </p>
-
-        {% for child_comment in comment.child_comment_set.all %}
-          <p>
-            └ {{ child_comment.content }}
-            {% if user.is_authenticated %}
-              <a href="/feeds/{{feed.id}}/comments/{{child_comment.id}}/like/?next={{request.path}}">
-                {{ child_comment.like_users.count }} Likes
-              </a>
-              {% if user == child_comment.author %}
-                <a href="/feeds/{{feed.id}}/comments/{{child_comment.id}}/delete/">대댓글 삭제</a>
-              {% endif %}
             {% else %}
-              <div>{{ child_comment.like_users.count }} Likes</div>
+              <div>{{ comment.like_users.count }} Likes</div>
             {% endif %}
           </p>
-        {% endfor %}
-      {% endif %}
-    {% endfor %}
+
+          {% for child_comment in comment.child_comment_set.all %}
+            <p>
+              └ {{ child_comment.content }}
+              {% if user.is_authenticated %}
+                <a href="/feeds/{{feed.id}}/comments/{{child_comment.id}}/like/?next={{request.path}}">
+                  {{ child_comment.like_users.count }} Likes
+                </a>
+                {% if user == child_comment.author %}
+                  <a href="/feeds/{{feed.id}}/comments/{{child_comment.id}}/delete/">대댓글 삭제</a>
+                {% endif %}
+              {% else %}
+                <div>{{ child_comment.like_users.count }} Likes</div>
+              {% endif %}
+            </p>
+          {% endfor %}
+        {% endif %}
+      {% endfor %}
+    </div>
     {% if user.is_authenticated %}
     <div>{{feed.created_at}}</div>
-    <form action="/feeds/{{feed.id}}/comments/" method="POST">
-      {% csrf_token %}
+    {% comment %} <form action="/feeds/{{feed.id}}/comments/" method="POST">
+      {% csrf_token %} {% endcomment %}
+    <div class="comment-input-box">
       <div class="comment">
         <img src="{% static 'feeds/images/smile.png' %}" alt="feed comment image"/>
-        <input name="content" type="text" placeholder="댓글 달기...">
+        <input id="comment-input" name="content" type="text" placeholder="댓글 달기...">
       </div>
-      <button type="submit">게시</button>
-    </form>
+      <button onclick="onAddComment({{feed.id}})" type="submit">게시</button>
+    </div>
+    {% comment %} </form> {% endcomment %}
     {% endif %}
   </div>
 </section>

@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block content %}
+<script src="{% static 'feeds/js/index.js' %}"></script>
 {% for feed in feeds %}
 <section class="feed">
   <div class="feed-header">
@@ -23,7 +24,7 @@
   <div class="feed-footer">
     <img class="buttons" src="{% static 'feeds/images/feed_buttons.png' %}" alt="feed buttons"/>
     {% if user.is_authenticated %}
-      <a href="/feeds/{{feed.id}}/like/">
+      <a id="{{feed.id}}-like-button" onClick="onClickLikeButton({{feed.id}})">
         {{ feed.like_users.count }} Likes
       </a>
     {% else %}
@@ -35,7 +36,7 @@
     <p>{{comment.content}}</p>
     {% endfor %}
     <div>{{feed.created_at}}</div>
-    <form action="/feeds/{{feed.id}}/comments/" method="POST">
+    <form class="comment-input-box" action="/feeds/{{feed.id}}/comments/" method="POST">
       {% csrf_token %}
       <div class="comment">
         <img src="{% static 'feeds/images/smile.png' %}" alt="feed comment image"/>
