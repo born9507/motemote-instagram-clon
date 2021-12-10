@@ -11,27 +11,38 @@ const onAddComment = async (feedId) => {
     // {"content": commentInputElement.value}
 
     const response = await axios.post(`/feeds/${feedId}/comments/`, data)
+    const commentId = response.data.id;
 
     const commentList = document.getElementById('comment-list')
     commentList.innerHTML = commentList.innerHTML + `
-      <p>
+      <p id="${commentId}-comment">
         ${response.data.content}
-        <a href="/feeds/${feedId}/comments/${response.data.id}}/like/">
+        <a id="${commentId}-comment-like-button" onClick="onClickCommentLikeButton(${feedId}, ${commentId})">
           0 Likes
         </a>
-        <a href="/feeds/${feedId}/comments/${response.data.id.toString()}}/delete/">댓글 삭제</a>
-        <a href="/feeds/${feedId}/comments/${response.data.id.toString()}}/create/">대댓글 달기</a>
+        <a onClick="onClickCommentDeleteButton(${feedId}, ${commentId})">댓글 삭제</a>
+        <a href="/feeds/${feedId}/comments/${response.data.id.toString()}/create/">대댓글 달기</a>
       </p>
     `
+
+    document.getElementById('comment-input').value = '';
   }
 }
 
-/* <p>
-  {{ comment.content }}
-    <a href="/feeds/{{feed.id}}/comments/{{comment.id}}/like/?next={{request.path}}">
-      {{ comment.like_users.count }} Likes
-    </a>
-    <a href="/feeds/{{feed.id}}/comments/{{comment.id}}/delete/">댓글 삭제</a>
-    <a href="/feeds/{{feed.id}}/comments/{{comment.id}}/create/">대댓글 달기</a>
-  {% endif %}
-</p> */
+const onClickLikeButton = async (feedId) => {
+  const feedLikeButton = document.getElementById(`${feedId}-like-button`);
+  const response = await axios.get(`/feeds/${feedId}/like/`);
+  feedLikeButton.innerHTML = `${response.data.feedLikeCount} Likes`
+}
+
+const onClickCommentLikeButton = async (feedId, commentId) => {
+  const commentLikeButton = document.getElementById(`${commentId}-comment-like-button`);
+  const response = await axios.get(`/feeds/${feedId}/comments/${commentId}/like/`);
+  commentLikeButton.innerHTML = `${response.data.commentLikeCount} Likes`
+}
+
+const onClickCommentDeleteButton = async (feedId, commentId) => {
+  const response = await axios.get(`/feeds/${feedId}/comments/${commentId}/delete/`);
+  const commentDeleted = document.getElementById(`${response.data.id}-comment`);
+  commentDeleted.remove();
+}

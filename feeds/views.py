@@ -51,7 +51,10 @@ def create_comment(request, id):
 def delete_comment(request, feed_id, comment_id):
     comment = Comment.objects.get(id=comment_id)
     comment.delete()
-    return redirect(f'/feeds/{feed_id}/')
+    # return redirect(f'/feeds/{feed_id}/')
+    return JsonResponse({
+        "id": comment_id
+    })
 
 
 def create_nested_comment(request, feed_id, comment_id):
@@ -89,4 +92,6 @@ def comment_like(request, id, comment_id):
         comment.like_users.remove(request.user)
     else:
         comment.like_users.add(request.user)
-    return redirect(request.GET.get('next', '/'))
+    return JsonResponse({
+        'commentLikeCount': comment.commentlike_set.count(),
+    })
